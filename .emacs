@@ -170,21 +170,6 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.todo\\'" . org-mode))
 
-;; configured cedet for use by ecb
-(load-file "~/.emacs.d/add-ons/cedet-1.0/common/cedet.el")
-(global-ede-mode 1)                      ; Enable the Project management system
-(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
-(global-srecode-minor-mode 1)            ; Enable template insertion menu
-
-;; configure ecb
-(add-to-list 'load-path "~/.emacs.d/add-ons/ecb-2.40")
-(require 'ecb-autoloads)
-
-;; Rinari
-(add-to-list 'load-path "~/.emacs.d/add-ons/rinari")
-(require 'rinari)
-(setq rinari-tags-file-name "TAGS")
-
 ;; --------------------------------------------
 ;; All Custom Keybinding
 ;; --------------------------------------------
