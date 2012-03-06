@@ -15,7 +15,6 @@
 ;; set's the load path for external libraries
 (setq load-path (cons "~/.emacs.d/add-ons" load-path))
 (setq load-path (cons "~/.emacs.d/add-ons/color-theme-6.6.0" load-path))
-(setq load-path (cons "~/.emacs.d/add-ons/scala-trunk-06-12-09/" load-path))
 (setq load-path (cons "~/.emacs.d/add-ons/yasnippet-0.6.1c/" load-path))
 (setq load-path (cons "~/.emacs.d/add-ons/ruby-mode/" load-path))
 
@@ -131,18 +130,14 @@
   ;; it's not loaded yet, so add our bindings to the load-hook
   (add-hook 'dired-load-hook 'my-dired-init))
 
-;; scala support
-(require 'scala-mode-auto)
-
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 (setq default-tab-width 2)
 (setq default-indent-tabs-mode nil)
 (setq javascript-auto-indent-flag nil)
 
-;; tables to spaces for scala mode
+;; tables to spaces 
 (defun me-turn-off-indent-tabs-mode () (setq indent-tabs-mode nil))
-(add-hook 'scala-mode-hook 'me-turn-off-indent-tabs-mode)
 
 ;; turn off tabs for html
 (add-hook 'html-mode-hook 'me-turn-off-indent-tabs-mode)
@@ -152,7 +147,6 @@
 
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory "~/.emacs.d/add-ons/scala-trunk-06-12-09/contrib/yasnippet")
 
 (put 'downcase-region 'disabled nil)
 
