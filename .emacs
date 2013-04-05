@@ -47,6 +47,9 @@
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 
+;; handle bar files
+(add-to-list 'auto-mode-alist '("\\.handlebars$" . html-mode))
+
 ;; enables parenthesis to be shown (i.e. matching)
 (show-paren-mode t)
 
@@ -75,16 +78,12 @@
 (setq-default ido-ignore-buffers '(my-ido-ignore-buffers) ido-auto-merge-work-directories-length -1)
 
 ;; enables color theme extension
-(require 'color-theme)
-(require 'color-theme-gruber-darker)
-(color-theme-initialize)
-(color-theme-gruber-darker)
+(require 'color-theme-tomorrow)
+(color-theme-tomorrow-night)
 
 ;; enables line highlighting
-(global-hl-line-mode 1)
-(set-face-background 'hl-line "#111")
-(set-face-foreground 'highlight nil) 
-(set-face-foreground 'hl-line nil)
+(global-hl-line-mode 0)
+(set-face-attribute 'default nil :font "Inconsolata-g")
 
 ;; set's the load path for the abbreviations file
 (setq abbrev-file-name "~/.emacs.d/abbrev-defs")
@@ -193,6 +192,7 @@
 (global-set-key [A-up] 'enlarge-window)
 (global-set-key [A-right] 'enlarge-window-horizontally)
 (global-set-key [A-left] 'shrink-window-horizontally)
+(global-set-key [A-backspace] 'balance-windows)
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 
