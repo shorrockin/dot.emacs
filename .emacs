@@ -19,13 +19,26 @@
 (setq load-path (cons "~/.emacs.d/add-ons/ruby-mode/" load-path))
 (setq load-path (cons "~/.emacs.d/add-ons/magit-1.2.0/" load-path))
 
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.handlebars\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+
 (require 'ruby-mode)
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 
 (require 'less-mode)
 
 ;; enables yaml mode
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
 ;; enables magit - https://github.com/magit/magit
 ;; requires downloading and building
@@ -51,9 +64,6 @@
 (require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-
-;; handle bar files
-(add-to-list 'auto-mode-alist '("\\.handlebars$" . html-mode))
 
 ;; enables parenthesis to be shown (i.e. matching)
 (show-paren-mode t)
