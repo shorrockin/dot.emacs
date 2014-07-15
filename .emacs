@@ -147,9 +147,6 @@
 ;; language specific configuration
 ;; --------------------------------------------
 
-;; used by a few languages, most useful for go
-(require 'auto-complete)
-
 ;; web mode allows pretty formatting and tab indenting of web files
 (require 'web-mode)
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
