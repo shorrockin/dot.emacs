@@ -90,6 +90,13 @@
 (require 'color-theme-tomorrow)
 (color-theme-tomorrow-night)
 
+;; enables colors in the compilation buffer
+(require 'ansi-color)
+(defun colorize-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-buffer)
 
 ;; --------------------------------------------
 ;; emacs functionality add-ons
@@ -128,16 +135,17 @@
 ;; use a single buffer for dired mode
 (require 'dired-single)
 (defun my-dired-init ()
-  "Bunch of stuff to run for dired, either immediately or when it'sloaded."
+  "Bunch of stuff to run for dired, either immediately or when it's loaded."
   ;; add other stuff here
   (define-key dired-mode-map [return] 'joc-dired-single-buffer)
   (define-key dired-mode-map [mouse-1] 'joc-dired-single-buffer-mouse)
   (define-key dired-mode-map "^"
     (function
      (lambda nil (interactive) (joc-dired-single-buffer "..")))))
-      ;; if dired's already loaded, then the keymap will be bound
+
+;; if dired's already loaded, then the keymap will be bound
 (if (boundp 'dired-mode-map)
-  ;; we're good to go; just add our bindings
+    ;; we're good to go; just add our bindings
     (my-dired-init)
   ;; it's not loaded yet, so add our bindings to the load-hook
   (add-hook 'dired-load-hook 'my-dired-init))
@@ -149,47 +157,53 @@
 
 ;; web mode allows pretty formatting and tab indenting of web files
 (require 'web-mode)
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.handlebars\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb.html\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.handlebars\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
 ;; ruby mode with all the other non-rb files we want to support
 (require 'ruby-mode)
-  (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Guardfile" . ruby-mode))
-  (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Guardfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 
 ;; enables yaml mode
 (require 'yaml-mode)
-  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
 ;; coffee script
 (require 'coffee-mode)
-  (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-  (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 
 ;; enables textile mode
 (require 'textile-mode)
-  (add-to-list 'auto-mode-alist '("\\.textile\\'" . textile-mode))
+(add-to-list 'auto-mode-alist '("\\.textile\\'" . textile-mode))
 
 ;; enables go (and other related useful golang stuff)
 (require 'go-mode)
-  (require 'go-autocomplete)
-  (require 'go-eldoc) 
-  (add-hook 'go-mode-hook 'go-eldoc-setup)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (setenv "GOPATH" "/Users/chrisshorrock/Work/go.code")
-  (add-to-path "/Users/chrisshorrock/Work/go.code/bin")
-  (add-to-path "/usr/local/go/bin")
-
+(require 'go-autocomplete)
+(require 'go-eldoc) 
+(setenv "GOPATH" "/Users/chrisshorrock/Work/go.code")
+(add-hook 'go-mode-hook '(lambda () 
+                           (add-to-path "/Users/chrisshorrock/Work/go.code/bin")
+                           (add-to-path "/usr/local/go/bin")
+                           (if (not (string-match "go" compile-command))
+                               (set (make-local-variable 'compile-command)
+                                    "go build -v && go test -v && go vet"))
+                           (add-hook 'go-mode-hook 'go-eldoc-setup)
+                           (setq gofmt-command "goimports") ;; go get code.google.com/p/go.tools/cmd/goimports
+                           (add-hook 'before-save-hook 'gofmt-before-save)
+                           (local-set-key (kbd "M-.") 'godef-jump)
+                           (local-set-key [f2] 'godef-jump)))
 
 
 ;; tabs to spaces for various languages
@@ -222,33 +236,22 @@
 
 ;; switches to the predefined org directory
 (defun notes ()
-   (interactive)
-   (find-file "~/Dropbox/org_notes"))
+  (interactive)
+  (find-file "~/Dropbox/org_notes"))
 
 
 ;; --------------------------------------------
 ;; custom key bindings
 ;; --------------------------------------------
 
-(fset 'switch-to-scratch
-   [?\C-x ?b ?\( S-backspace ?* ?s ?c ?r ?a ?t ?c ?h ?* return])
-
-(fset 'open-global-todo-list
-   [?\C-x ?\C-f ?\C-x ?\C-f ?\C-a ?\C-k ?/ ?c ?h ?r backspace backspace backspace ?s ?c ?p ?: ?c ?h ?r ?i ?s ?@ ?s ?h ?o ?r ?r ?o ?c ?k ?i ?n ?. ?c ?o ?m ?: ?e ?m ?a ?c ?s ?. ?t ?o ?d ?o return])
-
-(fset 'find-next-tag [?\C-u ?\M-.])
-(fset 'tag-return [?\M-*])
-
 (global-set-key [f1] 'rgrep)
+
 (global-set-key [f2] 'find-tag)
-(global-set-key [f3] 'find-next-tag)
-(global-set-key [f4] 'tag-return)
+(global-set-key [f3] 'pop-tag-mark)
+
 (global-set-key [f5] 'revert-buffer)
 (global-set-key [f7] 'align-regexp)
 (global-set-key [f8] 'call-last-kbd-macro)
-
-(global-set-key [f9] 'open-global-todo-list)
-(global-set-key [f10] 'switch-to-scratch)
 
 (global-set-key [A-down] 'shrink-window)
 (global-set-key [A-up] 'enlarge-window)
