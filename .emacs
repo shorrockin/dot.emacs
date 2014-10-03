@@ -253,6 +253,7 @@
 
 (global-set-key [f2] 'find-tag)
 (global-set-key [f3] 'pop-tag-mark)
+(global-set-key [f4] 'compile)
 
 (global-set-key [f5] 'revert-buffer)
 (global-set-key [f7] 'align-regexp)
