@@ -167,12 +167,18 @@
 (add-to-list 'auto-mode-alist '("\\.erb.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 
+;; make less use css styling
+(add-to-list 'auto-mode-alist '("\\.less\\'" . css-mode))
+
 ;; ruby mode with all the other non-rb files we want to support
 (require 'ruby-mode)
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Guardfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+
+(require 'rust-mode)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 
 (add-hook 'ruby-mode-hook
           (lambda ()
