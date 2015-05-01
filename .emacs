@@ -112,6 +112,8 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
+(define-key ac-completing-map [return] nil) ;; don't use return/enter for autocomplete
+(define-key ac-completing-map "\r" nil)     ;; same as above
 
 ;; enables ido-mode
 (require 'ido)
@@ -211,7 +213,7 @@
                                (set (make-local-variable 'compile-command)
                                     "go build -v && go test -v && go vet"))
                            (add-hook 'go-mode-hook 'go-eldoc-setup)
-                           (setq gofmt-command "goimports") ;; go get code.google.com/p/go.tools/cmd/goimports
+                           ;; (setq gofmt-command "goimports") ;; go get code.google.com/p/go.tools/cmd/goimports
                            (add-hook 'before-save-hook 'gofmt-before-save)
                            (local-set-key (kbd "M-.") 'godef-jump)
                            (local-set-key [f2] 'godef-jump)))
