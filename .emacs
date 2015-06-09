@@ -43,12 +43,6 @@
 ;; makes everything use y or n instead of yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; changes the default location for auto-save files
-;; Put autosave files (ie #foo#) in one place, *not*
-;; scattered all over the file system!
-(setq auto-save-file-name-transforms nil)
-(setq tramp-auto-save-directory nil)
-
 ;; turn off the menu and toolbar
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -59,9 +53,15 @@
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir "~/.emacs.d/backups/")
-(setq backup-directory-alist (list (cons "." backup-dir)))
-(setq tramp-backup-directory-alist backup-directory-alist)
+(defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
+  (setq backup-directory-alist
+    `((".*" . ,emacs-tmp-dir)))
+  (setq auto-save-file-name-transforms
+    `((".*" ,emacs-tmp-dir t)))
+  (setq auto-save-list-file-prefix
+      emacs-tmp-dir)
+(setq create-lockfiles nil)
+
 
 (defun add-to-path (entry)
   (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name entry)))
@@ -196,6 +196,7 @@
 (require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(add-to-list 'auto-mode-alist '("\\.cjsx$" . coffee-mode))
 
 ;; enables textile mode
 (require 'textile-mode)
@@ -213,7 +214,7 @@
                                (set (make-local-variable 'compile-command)
                                     "go build -v && go test -v && go vet"))
                            (add-hook 'go-mode-hook 'go-eldoc-setup)
-                           ;; (setq gofmt-command "goimports") ;; go get code.google.com/p/go.tools/cmd/goimports
+                           (setq gofmt-command "goimports") ;; go get code.google.com/p/go.tools/cmd/goimports
                            (add-hook 'before-save-hook 'gofmt-before-save)
                            (local-set-key (kbd "M-.") 'godef-jump)
                            (local-set-key [f2] 'godef-jump)))
@@ -307,7 +308,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(auto-save-default nil)
  '(coffee-cleanup-whitespace t)
  '(coffee-tab-width 2)
  '(js-expr-indent-offset 2)
