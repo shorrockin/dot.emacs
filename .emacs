@@ -1,5 +1,6 @@
 ;; enables elpa / melpa
 (require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 (unless package-archive-contents (package-refresh-contents))
@@ -8,7 +9,6 @@
   (dolist (p arguments)
      (unless (package-installed-p p)
        (package-install p))))
-
 
 ;; https://github.com/technomancy/better-defaults
 (ensure-installed 'better-defaults)
@@ -32,12 +32,23 @@
 ;; start emacs full-screen
 (custom-set-variables '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
+;; don't wrap lines - it's annoying for code
+(setq-default truncate-lines t)
+
 ;; color theme for the pretty stuff
 (ensure-installed 'color-theme)
 (ensure-installed 'color-theme-sanityinc-tomorrow)
 
 ;; Turn on column-number mode
 (column-number-mode)
+
+(ensure-installed 'ansi-color)
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 ;; allows you to move between buffers with shift-arrow
 (windmove-default-keybindings)
@@ -61,9 +72,28 @@
 
 ;; allows you to find file based in a git defined directory
 (ensure-installed 'find-things-fast)
+(add-to-list 'ftf-filetypes "*.go")
+(add-to-list 'ftf-filetypes "*.jsx")
+(add-to-list 'ftf-filetypes "*.js")
+(add-to-list 'ftf-filetypes "*.coffee")
+(add-to-list 'ftf-filetypes "*.json")
 
 ;; Prompt before closing
 (if window-system (setq confirm-kill-emacs 'yes-or-no-p))
+
+;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
+;; list contains regexp=>directory mappings; filenames matching a regexp are
+;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
+(defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
+  (setq backup-directory-alist
+    `((".*" . ,emacs-tmp-dir)))
+  (setq auto-save-file-name-transforms
+    `((".*" ,emacs-tmp-dir t)))
+  (setq auto-save-list-file-prefix
+      emacs-tmp-dir)
+(setq create-lockfiles nil)
+
+(setq temporary-file-directory "~/.emacs.d/tmp/")
 
 ;; function to add it to the command path, as well as the emacs exec-path
 (defun add-to-path (entry)
@@ -74,10 +104,12 @@
 ;; React
 (add-to-list 'auto-mode-alist '("\\.jsx$" . javascript-mode))
 
+
 ;; CoffeeScript
 (ensure-installed 'coffee-mode)
 (add-to-list 'auto-mode-alist '("Piefile" . coffee-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("\\.cjsx$" . coffee-mode))
 
 ;; LESS
 (ensure-installed 'less-css-mode)
@@ -86,18 +118,33 @@
 (ensure-installed 'sass-mode)
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 
+;; Yaml
+(ensure-installed 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
+;; ES6 Compatible JS
+(ensure-installed 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+(ensure-installed 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defun add-js2-minor-mode-hook () (js2-minor-mode 1))
+(add-hook 'web-mode-hook 'add-js2-minor-mode-hook)
+
 ;; Go
 ;; requires
 ;;   > go get -u github.com/nsf/gocode
 ;;   > go get -u go get -u github.com/rogpeppe/godef
 ;;   > go get -u code.google.com/p/go.tools/cmd/goimports
 ;;   > go get -u github.com/dougm/goflymake
+;;   > go get -u github.com/golang/lint/golint
 ;;
 ;; Resources:
 ;;   http://dominik.honnef.co/posts/2013/03/writing_go_in_emacs/
 ;;
-;; C-M-a   forward function
-;; C-M-e   back function
+;; C-M-a   forward function (beginning-of-defun)
+;; C-M-e   back function (end-of-defun)
 ;; M-.     jump forward to implementation
 ;; M-*     jump back to where you jumped forward
 ;;
@@ -110,23 +157,30 @@
 (add-to-list 'load-path "/Users/chris/Work/go/src/github.com/dougm/goflymake")
 (require 'go-flymake)
 
+(add-to-list 'load-path "/Users/chris/Work/go/src/github.com/golang/lint/misc/emacs")
+(require 'golint)
+
 (add-hook 'go-mode-hook '(lambda () 
                            (add-to-path "/Users/chris/Work/go/bin")
                            (add-to-path "/usr/local/go/bin")
                            (if (not (string-match "go" compile-command))
                                (set (make-local-variable 'compile-command)
-                                    "go build -v && go test -v && go vet"))
+                                    "go build -v && go test -v $(go list ./...  | grep -v /vendor/) && go vet $(go list ./...  | grep -v /vendor/)"))
                            (add-hook 'go-mode-hook 'go-eldoc-setup)
                            (setq gofmt-command "goimports") 
                            (add-hook 'before-save-hook 'gofmt-before-save)
                            (set (make-local-variable 'company-backends) '(company-go))
-                           (ftf-add-filetypes '("*.go"))
                            (company-mode)
+                           ;; (local-set-key [C-down] 'beginning-of-defun)
+                           ;; (local-set_key [C-up] 'end-of-defun)
                            (local-set-key (kbd "M-.") 'godef-jump)))
+
+
 
 ;; custom keybindings
 (global-set-key [f1] 'ftf-grepsource)
-(global-set-key [f2] 'compile)
+(global-set-key [f2] 'recompile)
+(global-set-key [f3] 'next-error)
 
 (global-set-key [f5] 'revert-buffer)
 (global-set-key [f7] 'align-regexp)
@@ -141,7 +195,6 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-x C-g") 'ftf-find-file)
 
-
 ;; Comment/uncomment shortcut
 (defun comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
@@ -152,6 +205,22 @@
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region-or-line)
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
 
 
 (custom-set-variables
