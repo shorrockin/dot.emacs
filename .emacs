@@ -30,7 +30,19 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; start emacs full-screen
-(custom-set-variables '(initial-frame-alist (quote ((fullscreen . maximized)))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
+ '(custom-safe-themes
+   (quote
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(package-selected-packages
+   (quote
+    (flycheck yaml-mode web-mode use-package smooth-scrolling sass-mode pkg-info list-packages-ext less-css-mode jsx-mode js2-mode go-eldoc find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
 
 ;; don't wrap lines - it's annoying for code
 (setq-default truncate-lines t)
@@ -155,12 +167,13 @@
 ;;
 (setenv "GOPATH" "/Users/chris/Work/go")
 
+(ensure-installed 'flycheck)
 (ensure-installed 'go-mode)
 (ensure-installed 'company-go)
 (ensure-installed 'go-eldoc)
 
 (add-to-list 'load-path "/Users/chris/Work/go/src/github.com/dougm/goflymake")
-(require 'go-flymake)
+(require 'go-flycheck)
 
 (add-to-list 'load-path "/Users/chris/Work/go/src/github.com/golang/lint/misc/emacs")
 (require 'golint)
@@ -228,15 +241,7 @@
           (set-buffer-modified-p nil))))))
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
- '(custom-safe-themes
-   (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
