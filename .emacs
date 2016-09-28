@@ -72,11 +72,16 @@
 
 ;; allows you to find file based in a git defined directory
 (ensure-installed 'find-things-fast)
-(add-to-list 'ftf-filetypes "*.go")
-(add-to-list 'ftf-filetypes "*.jsx")
-(add-to-list 'ftf-filetypes "*.js")
-(add-to-list 'ftf-filetypes "*.coffee")
-(add-to-list 'ftf-filetypes "*.json")
+(setq ftf-filetypes
+      '("*.go"
+        "*.jsx"
+        "*.js"
+        "*.coffee"
+        "*.json"
+        "*.md"
+        ))
+
+
 
 ;; Prompt before closing
 (if window-system (setq confirm-kill-emacs 'yes-or-no-p))
