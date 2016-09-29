@@ -10,6 +10,9 @@
      (unless (package-installed-p p)
        (package-install p))))
 
+;; improved package menu, easy upgrades with paradox-upgrade-packages
+(ensure-installed 'paradox)
+
 ;; https://github.com/technomancy/better-defaults
 (ensure-installed 'better-defaults)
 (require 'better-defaults)
@@ -42,7 +45,8 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (flycheck yaml-mode web-mode use-package smooth-scrolling sass-mode pkg-info list-packages-ext less-css-mode jsx-mode js2-mode go-eldoc find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
+    (paradox flycheck yaml-mode web-mode use-package smooth-scrolling sass-mode pkg-info list-packages-ext less-css-mode jsx-mode js2-mode go-eldoc find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults)))
+ '(paradox-github-token t))
 
 ;; don't wrap lines - it's annoying for code
 (setq-default truncate-lines t)
@@ -152,8 +156,8 @@
 ;; Go
 ;; requires
 ;;   > go get -u github.com/nsf/gocode
-;;   > go get -u go get -u github.com/rogpeppe/godef
-;;   > go get -u code.google.com/p/go.tools/cmd/goimports
+;;   > go get -u github.com/rogpeppe/godef
+;;   > go get -u golang.org/x/tools/cmd/goimports
 ;;   > go get -u github.com/dougm/goflymake
 ;;   > go get -u github.com/golang/lint/golint
 ;;
@@ -167,13 +171,14 @@
 ;;
 (setenv "GOPATH" "/Users/chris/Work/go")
 
-(ensure-installed 'flycheck)
+;; (ensure-installed 'flycheck)
 (ensure-installed 'go-mode)
 (ensure-installed 'company-go)
 (ensure-installed 'go-eldoc)
 
 (add-to-list 'load-path "/Users/chris/Work/go/src/github.com/dougm/goflymake")
-(require 'go-flycheck)
+;; (require 'go-flycheck)
+(require 'go-flymake)
 
 (add-to-list 'load-path "/Users/chris/Work/go/src/github.com/golang/lint/misc/emacs")
 (require 'golint)
