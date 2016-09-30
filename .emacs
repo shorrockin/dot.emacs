@@ -196,7 +196,8 @@
                            (company-mode)
                            ;; (local-set-key [C-down] 'beginning-of-defun)
                            ;; (local-set_key [C-up] 'end-of-defun)
-                           (local-set-key (kbd "M-.") 'godef-jump)))
+                           (local-set-key (kbd "M-.") 'godef-jump)
+                           (local-set-key (kbd "M-*") 'pop-tag-mark)))
 
 
 
