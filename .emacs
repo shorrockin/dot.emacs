@@ -22,7 +22,10 @@
 (setq mac-command-modifier 'ctrl)
 (setq mac-control-modifier 'meta)
 
-; disables splash screen
+;; remove white space on save
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+;; disables splash screen
 (setq inhibit-splash-screen t)
 
 ;; WHTF I don't want things to flicker and flash and beep every damn time I hit `C-g`
@@ -31,22 +34,6 @@
 
 ;; makes everything use y or n instead of yes or no
 (fset 'yes-or-no-p 'y-or-n-p)
-
-;; start emacs full-screen
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
- '(custom-safe-themes
-   (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
- '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(package-selected-packages
-   (quote
-    (paradox flycheck yaml-mode web-mode use-package smooth-scrolling sass-mode pkg-info list-packages-ext less-css-mode jsx-mode js2-mode go-eldoc find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults)))
- '(paradox-github-token t))
 
 ;; don't wrap lines - it's annoying for code
 (setq-default truncate-lines t)
@@ -83,6 +70,15 @@
 (setq tab-width 2)
 (setq default-tab-width 2)
 
+(add-hook 'css-mode-hook '(lambda() (setq tab-width 2)))
+
+(setq-default js2-basic-offset 2)
+(setq-default css-indent-offset 2)
+(setq-default web-mode-markup-indent-offset 2)
+(setq-default web-mode-css-indent-offset 2)
+(setq-default web-mode-code-indent-offset 2)
+(setq-default web-mode-attr-indent-offset 2)
+
 ;; enables smooth scrolling
 (ensure-installed 'smooth-scrolling)
 
@@ -92,6 +88,9 @@
       '("*.go"
         "*.jsx"
         "*.js"
+        "*.ts"
+        "*.tsx"
+        "*.rb"
         "*.coffee"
         "*.json"
         "*.md"
@@ -101,6 +100,24 @@
 
 ;; Prompt before closing
 (if window-system (setq confirm-kill-emacs 'yes-or-no-p))
+
+;; start emacs full-screen
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
+ '(custom-safe-themes
+   (quote
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(js-indent-level 2)
+ '(js-switch-indent-offset 2)
+ '(package-selected-packages
+   (quote
+    (tide yaml-mode web-mode use-package smooth-scrolling sass-mode rjsx-mode paradox list-packages-ext less-css-mode jsx-mode go-eldoc flycheck find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
+
 
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
@@ -122,8 +139,38 @@
   (setq exec-path (append exec-path (list (expand-file-name entry)))))
 (add-to-path "/usr/local/bin")
 
-;; React
-(add-to-list 'auto-mode-alist '("\\.jsx$" . javascript-mode))
+;; React / JS / JSX
+(ensure-installed 'rjsx-mode)
+(setq-default js2-strict-trailing-comma-warning nil) ;; ignore trailing commas
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("containers\\/.*\\.js\\'" . rjsx-mode))
+
+;; Typescript / React / TSX
+(ensure-installed 'tide)
+(ensure-installed 'company)
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(setq company-tooltip-align-annotations t) ;; aligns annotation to the right hand side
+(add-hook 'before-save-hook 'tide-format-before-save) ;; formats the buffer before saving
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+(setq tide-format-options '(:indentSize 2 :tabSize 2))
+
 
 
 ;; CoffeeScript
@@ -146,12 +193,13 @@
 
 ;; ES6 Compatible JS
 (ensure-installed 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode))
 
+;; Web Mode / Good For HTML and the like, not as good as RSJX for JS stuff
 (ensure-installed 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-(defun add-js2-minor-mode-hook () (js2-minor-mode 1))
-(add-hook 'web-mode-hook 'add-js2-minor-mode-hook)
+;; (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+;; (defun add-js2-minor-mode-hook () (js2-minor-mode 1))
+;; (add-hook 'web-mode-hook 'add-js2-minor-mode-hook)
 
 ;; Go
 ;; requires
@@ -183,14 +231,14 @@
 (add-to-list 'load-path "/Users/chris/Work/go/src/github.com/golang/lint/misc/emacs")
 (require 'golint)
 
-(add-hook 'go-mode-hook '(lambda () 
+(add-hook 'go-mode-hook '(lambda ()
                            (add-to-path "/Users/chris/Work/go/bin")
                            (add-to-path "/usr/local/go/bin")
                            (if (not (string-match "go" compile-command))
                                (set (make-local-variable 'compile-command)
                                     "go build -v && go test -v $(go list ./...  | grep -v /vendor/) && go vet $(go list ./...  | grep -v /vendor/)"))
                            (add-hook 'go-mode-hook 'go-eldoc-setup)
-                           (setq gofmt-command "goimports") 
+                           (setq gofmt-command "goimports")
                            (add-hook 'before-save-hook 'gofmt-before-save)
                            (set (make-local-variable 'company-backends) '(company-go))
                            (company-mode)
@@ -245,8 +293,6 @@
           (rename-buffer new-name)
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
-
-
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
