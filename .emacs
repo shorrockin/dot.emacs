@@ -94,6 +94,8 @@
         "*.coffee"
         "*.json"
         "*.md"
+        "*.erb"
+        "*.rb"
         ))
 
 
