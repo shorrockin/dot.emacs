@@ -78,8 +78,12 @@
 (setq-default web-mode-code-indent-offset 2)
 (setq-default web-mode-attr-indent-offset 2)
 
-;; enables smooth scrolling
-(use-package smooth-scrolling)
+;; enables smooth scrolling, sublimity if you want it
+(use-package sublimity)
+(require 'sublimity-scroll)
+(require 'sublimity-map)
+;; (require 'sublimity-attractive)
+(sublimity-mode 1)
 
 ;; allows you to find file based in a git defined directory
 (use-package find-things-fast)
@@ -122,6 +126,10 @@
   :config
   (helm-projectile-on))
 
+;; used for quickly opening github links to line or region
+(use-package git-link
+  :config
+  (setq git-link-open-in-browser t))
 
 ;; Prompt before closing
 (if window-system (setq confirm-kill-emacs 'yes-or-no-p))
@@ -220,6 +228,10 @@
 (use-package js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode))
 
+;; Dumb-Jump - who needs TAGS when you can use this!?
+;; https://github.com/jacktasia/dumb-jump
+(use-package dumb-jump)
+
 ;; Web Mode / Good For HTML and the like, not as good as RSJX for JS stuff
 
 ;; (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
@@ -305,10 +317,14 @@
 ;; (global-set-key [f1] 'ftf-grepsource)
 ;; (global-set-key [f2] 'recompile)
 ;; (global-set-key [f3] 'next-error)
-(global-set-key (kbd "M-*") 'pop-tag-mark)
+(global-set-key (kbd "M-.") 'dumb-jump-go)
+(global-set-key (kbd "M-*") 'dumb-jump-back)
+
 ;; (global-set-key [f5] 'revert-buffer)
 (global-set-key [f7] 'align-regexp)
 (global-set-key [f8] 'call-last-kbd-macro)
+(global-set-key [f2] 'git-link)
+(global-set-key [f5] 'revert-buffer)
 
 (global-set-key [A-down] 'shrink-window)
 (global-set-key [A-up] 'enlarge-window)
@@ -336,4 +352,10 @@
  '(js-switch-indent-offset 2)
  '(package-selected-packages
    (quote
-    (magit helm-projectile helm projectile prettier-js flycheck-flow company-flow tide yaml-mode web-mode use-package smooth-scrolling sass-mode rjsx-mode paradox list-packages-ext less-css-mode jsx-mode flycheck find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
+    (sublimity-scroll sublimity git-link dumb-jump robe robe-mode magit helm-projectile helm projectile prettier-js flycheck-flow company-flow tide yaml-mode web-mode use-package smooth-scrolling sass-mode rjsx-mode paradox list-packages-ext less-css-mode jsx-mode flycheck find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
