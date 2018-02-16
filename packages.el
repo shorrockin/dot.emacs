@@ -13,6 +13,10 @@
 
 ;; allows you to find file based in a git defined directory
 (use-package find-things-fast
+  :bind
+  ("C-x g g" . ftf-find-file)
+  ("C-x C-g" . ftf-find-file)
+  ("C-x g f" . ftf-grepsource)
   :config
   (setq ftf-filetypes
         '("*.go"
@@ -26,6 +30,7 @@
           "*.md"
           "*.erb"
           "*.rb"
+          "*.yml"
           )))
 
 (use-package ivy
@@ -37,8 +42,8 @@
 
 (use-package projectile
   :ensure t
-  :bind
-  ("C-x C-g" . projectile-find-file)
+  ;; :bind
+  ;; ("C-x C-g" . projectile-find-file)
   :config
   (projectile-global-mode)
   (setq projectile-mode-line
