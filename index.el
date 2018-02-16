@@ -29,7 +29,7 @@
  '(js-switch-indent-offset 2)
  '(package-selected-packages
    (quote
-    (ivy sublimity-scroll sublimity git-link dumb-jump robe robe-mode magit projectile prettier-js flycheck-flow company-flow tide yaml-mode web-mode use-package smooth-scrolling sass-mode rjsx-mode paradox list-packages-ext less-css-mode jsx-mode flycheck find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
+    (nyan-mode nyan-cat ivy sublimity-scroll sublimity git-link dumb-jump robe robe-mode magit projectile prettier-js flycheck-flow company-flow tide yaml-mode web-mode use-package smooth-scrolling sass-mode rjsx-mode paradox list-packages-ext less-css-mode jsx-mode flycheck find-things-fast company-go color-theme-sanityinc-tomorrow color-theme coffee-mode better-defaults))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

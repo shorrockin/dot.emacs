@@ -120,3 +120,8 @@
   :bind
   ("M-." . dumb-jump-go)
   ("M-*" . dump-jump-back))
+
+(use-package nyan-mode
+  :config
+  (setq nyan-animate-nyancat t)
+  (nyan-mode))
