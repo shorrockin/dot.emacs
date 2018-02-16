@@ -81,7 +81,7 @@
 ;; enables smooth scrolling, sublimity if you want it
 (use-package sublimity)
 (require 'sublimity-scroll)
-(require 'sublimity-map)
+;; (require 'sublimity-map)
 ;; (require 'sublimity-attractive)
 (sublimity-mode 1)
 
