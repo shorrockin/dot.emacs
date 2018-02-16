@@ -38,7 +38,9 @@
   :diminish ivy-mode
   :config
   (ivy-mode 1)
-  (bind-key "C-c C-r" 'ivy-resume))
+  (bind-key "C-c C-r" 'ivy-resume)
+  (setq ivy-height 20))
+
 
 (use-package projectile
   :ensure t
@@ -124,7 +126,7 @@
 (use-package dumb-jump
   :bind
   ("M-." . dumb-jump-go)
-  ("M-*" . dump-jump-back))
+  ("M-*" . dumb-jump-back))
 
 (use-package nyan-mode
   :config
