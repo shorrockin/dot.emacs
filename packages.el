@@ -64,6 +64,7 @@
   (setq projectile-mode-line
         '(:eval (format " [%s]" (projectile-project-name))))
   (setq projectile-remember-window-configs t)
+  (setq projectile-enable-caching t)
   (setq projectile-completion-system 'ivy))
 
 (use-package counsel
