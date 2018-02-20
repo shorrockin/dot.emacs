@@ -4,6 +4,11 @@
 
 (use-package ansi-color)
 
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode +1))
+
 ;; enables smooth scrolling, sublimity if you want it
 (use-package sublimity
   :config
@@ -14,8 +19,8 @@
 ;; allows you to find file based in a git defined directory
 (use-package find-things-fast
   :bind
-  ("C-x g g" . ftf-find-file)
-  ("C-x C-g" . ftf-find-file)
+  ;; ("C-x g g" . ftf-find-file)
+  ;; ("C-x C-g" . ftf-find-file)
   ("C-x g f" . ftf-grepsource)
   :config
   (setq ftf-filetypes
@@ -41,11 +46,19 @@
   (bind-key "C-c C-r" 'ivy-resume)
   (setq ivy-height 20))
 
+;; makes the ivy-switch buffer fancy
+(use-package ivy-rich
+  :config
+  (setq ivy-rich-path-style 'abbrev)
+  (setq ivy-virtual-abbreviate 'full)
+  (setq ivy-rich-switch-buffer-align-virtual-buffer t)
+  (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))
 
 (use-package projectile
   :ensure t
-  ;; :bind
-  ;; ("C-x C-g" . projectile-find-file)
+  :bind
+  ("C-x C-g" . projectile-find-file)
+  ("C-x g g" . projectile-find-file)
   :config
   (projectile-global-mode)
   (setq projectile-mode-line
