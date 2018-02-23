@@ -1,0 +1,50 @@
+* Org Mode
+
+  This file is meant to provide a place to centralize all the org-mode config.
+  It probably doesn't need to be in it's own file, however, in doing so it allows
+  me to document things as I figure it out.
+
+** Reading Material **
+
+  Here are some references for org mode that were useful while learning org-mode
+  better:
+
+  - [[https://blog.aaronbieber.com/2016/01/30/dig-into-org-mode.html]]
+  - [[https://orgmode.org/worg/org-faq.html]]
+
+** Todo Setup **
+
+   The following sets up our default TODO
+
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+   #+END_SRC
+
+   These can all be overridden by declaring something like the following at
+   the head of any org file.
+
+   ~#+TODO: TODO IN-PROGRESS WAITING | DONE CANCELED~
+
+   Forces all child tasks to be marked as done before the parent can
+   be marked as done.
+
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (setq org-enforce-todo-dependencies t)
+   #+END_SRC
+
+   Adds a timestamp annotation for when the task is marked as complete.
+
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (setq org-log-done (quote time))
+   #+END_SRC
+
+** Key Bindings
+
+   Here We setup some org-mode bindings to match my preferences.
+
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (define-key org-mode-map (kbd "S-<left>") nil)
+     (define-key org-mode-map (kbd "S-<right>") nil)
+     (define-key org-mode-map (kbd "S-<up>") nil)
+     (define-key org-mode-map (kbd "S-<down>") nil)
+   #+END_SRC

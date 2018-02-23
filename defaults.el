@@ -1,5 +1,3 @@
-(setq use-package-always-ensure t)
-
 (setq temporary-file-directory "~/.emacs.d/tmp/")
 
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
@@ -43,7 +41,10 @@
 
 ;; Default tab width of 2
 (setq tab-width 2)
-(setq default-tab-width 2)
+
+;; initial mode for scratch
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message nil)
 
 (add-hook 'css-mode-hook '(lambda() (setq tab-width 2)))
 

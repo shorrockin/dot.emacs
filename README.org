@@ -1,4 +1,4 @@
-* ~~/.emacs.d~
+* ~/.emacs.d
   Just my emacs configuration. See ~index.el~ for the where it all starts.
 
 * Installing

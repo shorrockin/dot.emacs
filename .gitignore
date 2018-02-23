@@ -9,3 +9,4 @@ tmp/
 tramp
 var/
 init.el
+orgmode.el
