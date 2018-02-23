@@ -11,13 +11,14 @@ better:
 
   - [[https://blog.aaronbieber.com/2016/01/30/dig-into-org-mode.html]]
   - [[https://orgmode.org/worg/org-faq.html]]
+  - https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
+  - https://orgmode.org/manual/In_002dbuffer-settings.html#In_002dbuffer-settings
 
 ** Todo Setup
 
 The following sets up our default TODO
-
 #+BEGIN_SRC emacs-lisp :tangle yes
-setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+(setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
 #+END_SRC
 
 These can all be overridden by declaring something like the following at
@@ -27,31 +28,51 @@ the head of any org file.
 
 Forces all child tasks to be marked as done before the parent can
 be marked as done.
-
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq org-enforce-todo-dependencies t)
 #+END_SRC
 
 Adds a timestamp annotation for when the task is marked as complete.
-
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq org-log-done (quote time))
 #+END_SRC
 
 Sets up ~org-indent-mode~ to be on by default which [[https://orgmode.org/manual/Clean-view.html][cleans up]] how things are
 displayed in regards to indentation.
-
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq org-startup-indented t)
 #+END_SRC
 
+Sets the initial visiblity of an opened file. To define this specifically on
+a per file basis check out [[https://orgmode.org/manual/Initial-visibility.html][this]] link.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq org-startup-folded "content")
+#+END_SRC
+
+Customizes the ellipsis which indicates when things can be unfolded.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq org-ellipsis "⤵")
+#+END_SRC
+
 ** Key Bindings
 
-Here We setup some org-mode bindings to match my preferences.
-
+Here We setup some org-mode bindings to match my preferences, first to undo-the
+mappings for shift-<arrow>, as I use these to navigate between my buffers.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (define-key org-mode-map (kbd "S-<left>") nil)
 (define-key org-mode-map (kbd "S-<right>") nil)
 (define-key org-mode-map (kbd "S-<up>") nil)
 (define-key org-mode-map (kbd "S-<down>") nil)
+#+END_SRC
+
+Now sets up speed keys, a lesser known, but useful feature to perform things better.
+See the following sources for documentation.
+
+- http://notesyoujustmightwanttosave.blogspot.ca/2011/12/org-speed-keys.html
+- https://orgmode.org/manual/Speed-keys.html
+
+Specifically ~t~ and ~1~, ~2~, ~3~ to set the various priorities which were disabled
+above. Press ~?~ at the start of any headline to see what's possible.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq org-use-speed-commands t)
 #+END_SRC
