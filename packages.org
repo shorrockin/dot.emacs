@@ -1,0 +1,225 @@
+* Packages
+
+All the great packages that get imported for use.
+
+** [[https://github.com/purcell/color-theme-sanityinc-tomorrow][Color Theme: Tomorrow Night]]
+
+Same theme I use in the terminal for optimal visual compatibility
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package color-theme-sanityinc-tomorrow
+  :config
+  (setf custom-safe-themes t)
+  (color-theme-sanityinc-tomorrow-night)
+  (global-hl-line-mode 1)
+  (custom-set-faces
+   '(cursor ((t :background "#eebb28")))))
+#+END_SRC
+
+** [[https://github.com/justbur/emacs-which-key][Which Key]]
+
+Handy package to display available keys in the minibuffer when you're half-way
+through a command.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode +1))
+#+END_SRC
+
+** [[https://github.com/zk-phi/sublimity][Sublimity]]
+
+Sublimity adds smoother scrolling to emacs. Similar to sublime editor (apparently,
+never used it). Also has support for mini-maps, but I found them to distracting and
+not providing any real value.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package sublimity
+  :config
+  (require 'sublimity)
+  (require 'sublimity-scroll)
+  (sublimity-mode 1))
+#+END_SRC
+
+** [[https://github.com/eglaysher/find-things-fast][Find Things Fast (FTF)]]
+
+FTF is a quick way to find things quickly in an git based project. I originally used
+it to find files, however, now projectile seems to be faster and better at this. At current
+I just use it for the ~ftf-grepsource~ command bound below.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package find-things-fast
+  :bind
+  ;; ("C-x g g" . ftf-find-file)
+  ;; ("C-x C-g" . ftf-find-file)
+  ("C-x g f" . ftf-grepsource)
+  :config
+  (setq ftf-filetypes
+        '("*.go"
+          "*.jsx"
+          "*.js"
+          "*.ts"
+          "*.tsx"
+          "*.rb"
+          "*.coffee"
+          "*.json"
+          "*.md"
+          "*.erb"
+          "*.rb"
+          "*.yml"
+          )))
+#+END_SRC
+
+** [[https://github.com/emacscollective/no-littering][No Literring]]
+
+Simple package to ensure that ~.emacs.d~ stays tidy and clean.
+#+BEGIN_SRC emacs-lisp :tangle yes
+ (use-package no-littering
+   :demand t)
+#+END_SRC
+
+** [[https://github.com/abo-abo/swiper][Ivy & Counsel]]
+
+Ivy and Consel are two related packages, one for improved autocomplete (similar to helm)
+and another for slightly enhanced commands.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package ivy
+  :ensure t
+  :diminish ivy-mode
+  :config
+  (ivy-mode 1)
+  (bind-key "C-c C-r" 'ivy-resume)
+  (setq ivy-height 20))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package counsel
+  :ensure t
+  :bind
+  ("M-x" . counsel-M-x))
+#+END_SRC
+
+** [[https://github.com/bbatsov/projectile][Projectile]]
+
+A way to navigate a project in emacs. Find file is super helpeful on big projects, largely
+due to the caching. Integrates nicely with ivy.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package projectile
+  :ensure t
+  :bind
+  ("C-x C-g" . projectile-find-file)
+  ("C-x g g" . projectile-find-file)
+  :config
+  (projectile-mode)
+  (setq projectile-mode-line
+        '(:eval (format " [%s]" (projectile-project-name))))
+  (setq projectile-enable-caching t)
+  (setq projectile-completion-system 'ivy))
+#+END_SRC
+
+*** TODO need to figure out how to get ~projectile-toggle-between-implementation-and-test~ working
+
+** [[https://github.com/sshaw/git-link][Git Link]]
+
+A great way to open up a link to a file in github by either a line or a region. Binds to <f2> by
+default. Corporate github can be setup as well. See homepage for details (and use ~emacs.private.el~)
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package git-link
+  :bind
+  ([f2] . git-link)
+  :config
+  (setq git-link-open-in-browser t))
+#+END_SRC
+
+** [[https://github.com/felipeochoa/rjsx-mode][React JSX Mode]]
+
+The best (that I could find when I added it) way to work with react jsx files in emacs.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package rjsx-mode
+  :config
+  (setq-default js2-strict-trailing-comma-warning nil) ;; ignore trailing commas
+  (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
+  (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+  (add-to-list 'auto-mode-alist '("containers\\/.*\\.js\\'" . rjsx-mode)))
+#+END_SRC
+
+** [[https://github.com/mooz/js2-mode][JS2 Mode]]
+
+Modifies rjsx mode by adding ES6 capabilities.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package js2-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode)))
+#+END_SRC
+
+
+
+** [[https://magit.vc/][Magit]]
+
+The defacto git client for emacs. Truthfully I still default to the command line for most
+things, but it comes in handy occasionally.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package magit)
+#+END_SRC
+
+** [[http://company-mode.github.io/][Company Mode (Complete Anything)]]
+
+Is a way to complete commands, serves as a backend for other packages mostly.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package company
+  :config
+  (global-company-mode))
+#+END_SRC
+
+** [[http://web-mode.org/][Web Mode]]
+
+A major mode for html, jsx, less, css editing. Indents well, easy to use, good color
+coding.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package web-mode
+  :init
+  (defun web-mode-customization ()
+    "Customization for web-mode."
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-attr-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-enable-auto-pairing t)
+    (setq web-mode-enable-css-colorization t)
+    (add-hook 'before-save-hook 'delete-trailing-whitespace nil 'local))
+  (add-hook 'web-mode-hook 'web-mode-customization)
+  :mode ("\\.html?\\'" "\\.erb\\'" "\\.hbs\\'"
+         "\\.jsx?\\'" "\\.json\\'" "\\.s?css\\'"
+         "\\.less\\'" "\\.sass\\'"))
+#+END_SRC
+
+** [[https://github.com/yoshiki/yaml-mode][Yaml Mode]]
+
+Major mode for editing yaml.
+;; Yaml
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package yaml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode)))
+#+END_SRC
+
+** [[https://github.com/jacktasia/dumb-jump][Dumb Jump]]
+
+Dump jump is a really simple, jump to definition implementation. Similar
+to using ~TAGS~ without a lot of the hassle.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package dumb-jump
+  :bind
+  ("M-." . dumb-jump-go)
+  ("M-*" . dumb-jump-back))
+#+END_SRC
+
+** [[https://github.com/TeMPOraL/nyan-mode][Nyan Mode]]
+
+The dumbest mode in here. Add's a little rainbow nyan cat to represent
+progress in a file. A nice visual way to represent a percentage really.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package nyan-mode
+  :config
+  (nyan-mode))
+#+END_SRC
