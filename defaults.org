@@ -60,7 +60,7 @@ Who wants a splash screen? I have coding to do!
 (setq inhibit-splash-screen t)
 #+END_SRC
 
-WHTF I don't want things to flicker and flash and beep every damn time I hit `C-g` -
+[[https://youtu.be/5jQKvxh-_84?t=4m44s][WHTF]] I don't want things to flicker and flash and beep every damn time I hit `C-g` -
 what type of sociapath would want this, I'll never know.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq ring-bell-function 'ignore)
