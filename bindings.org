@@ -21,4 +21,6 @@ all modes. It doesn't really require more explanation than that.
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(global-set-key (kbd "C-/") 'comment-or-uncomment-region-or-line)
 #+END_SRC

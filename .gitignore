@@ -11,3 +11,4 @@ var/
 init.el
 orgmode.el
 bindings.el
+functions.el

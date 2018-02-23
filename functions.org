@@ -1,3 +1,14 @@
+* Functions
+
+Any custom functions should be defined in this fine. Things for which a seperate package
+is unavailable, or simply unecessary.
+
+** Uncomment / Comment
+
+This function simply uncomments a line or region based on the language which is currently
+being used. Gloal keybindings defined in the ~bindings.org~ file.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
 ;; Comment/uncomment shortcut
 (defun comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
@@ -7,9 +18,14 @@
             (setq beg (region-beginning) end (region-end))
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)))
-(global-set-key (kbd "C-/") 'comment-or-uncomment-region-or-line)
+#+END_SRC
 
-;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+** Rename File & Buffer
+
+One of my favorites. Renames a file, as well as the active buffer. It feels like this should
+exist already in emacs, yet it doesn't. "Borrowed" from [[http://steve.yegge.googlepages.com/my-dot-emacs-file][Steve Yegge]].
+
+#+BEGIN_SRC emacs-lisp :tangle yes
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -24,3 +40,4 @@
           (rename-buffer new-name)
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
+#+END_SRC
