@@ -10,3 +10,4 @@ tramp
 var/
 init.el
 orgmode.el
+bindings.el

@@ -1,3 +1,9 @@
+* Bindings
+
+This file simply contains a collection of key bindings that is common to
+all modes. It doesn't really require more explanation than that.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
 (global-set-key [f7] 'align-regexp)
 (global-set-key [f8] 'call-last-kbd-macro)
 (global-set-key [f5] 'revert-buffer)
@@ -15,3 +21,4 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+#+END_SRC
