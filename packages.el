@@ -51,6 +51,9 @@
   (bind-key "C-c C-r" 'ivy-resume)
   (setq ivy-height 20))
 
+ (use-package no-littering
+   :demand t)
+
 (use-package projectile
   :ensure t
   :bind

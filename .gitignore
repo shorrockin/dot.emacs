@@ -7,3 +7,5 @@ projectile-bookmarks.eld
 projectile.cache
 tmp/
 tramp
+var/
+init.el

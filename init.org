@@ -1,0 +1,50 @@
+* Initialization File
+
+  This file serves as the first thing when we boot emacs. From here we setup some
+  defaults and some things we'll use throughout the rest of configuration.
+
+** Use Package
+
+   Sets up ~use-package~ [[[[https://github.com/jwiegley/use-package]]]] which in short
+   provides a common way to load and access packages.
+
+   #+name: use-package setup
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (require 'package)
+     (setq package-enable-at-startup nil)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+     (package-initialize)
+
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+   #+END_SRC
+
+** Screen Setup
+
+   The following simply sets up some screen setup, disables menus, scrollbars, maximizes
+   the screen, etc.
+
+   #+name: screen settings
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (menu-bar-mode 0)
+     (tool-bar-mode 0)
+     (scroll-bar-mode 0)
+     (horizontal-scroll-bar-mode 0)
+     (toggle-frame-maximized)
+   #+END_SRC
+
+** Errata
+
+   Set's some common variables. Kind of a mish mash of stuff.
+
+   #+name: everything else
+   #+BEGIN_SRC emacs-lisp :tangle yes
+     (show-paren-mode 1)
+     (setq-default indent-tabs-mode nil)
+
+     (setq debug-on-error t
+       load-prefer-newer t
+       uniquify-buffer-name-style 'forward
+       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
+   #+END_SRC
