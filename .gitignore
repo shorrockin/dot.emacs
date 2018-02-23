@@ -12,3 +12,4 @@ init.el
 orgmode.el
 bindings.el
 functions.el
+defaults.el

@@ -1,0 +1,111 @@
+* Defaults
+
+This is a list of some high-level global defaults that do a variety of different things.
+
+** Functional Settings
+
+Set's the temp directory to run out of ~.emacs.d~ which is in our ~.gitignore~.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq temporary-file-directory "~/.emacs.d/tmp/")
+#+END_SRC
+
+I've found flycheck for emacs-lisp to be a little suspect, so this disables it.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+#+END_SRC
+
+Modifies the meta keys to work better (imo) on a kenesis keyboard. ymmv.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq mac-option-modifier 'alt)
+(setq mac-command-modifier 'ctrl)
+(setq mac-control-modifier 'meta)
+#+END_SRC
+
+Cleans up white space on save. This is almost always what i want. Might look into
+white-listing it to certain modes as it causes a problem once in every few years.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(add-hook 'before-save-hook 'whitespace-cleanup)
+#+END_SRC
+
+Set's up your shift-<arrow> keys to toggle between buffers. Collides a bit with default org-mode
+bindings, but that can be overcome as seen in the orgmode settings.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(windmove-default-keybindings)
+#+END_SRC
+
+We don't want [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Fill.html][Autofill]] enabled by default. This turns it off, even for text-mode. Which I could go
+either way on.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(auto-fill-mode -1)
+(remove-hook 'text-mode-hook 'turn-on-auto-fill)
+#+END_SRC
+
+Set's the default tab width of two, which for most languages is what I want. Can, of course, be
+overridden in each modes config.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq tab-width 2)
+#+END_SRC
+
+Set's up org-mode as the default scratch mode, also removes the default message.
+#+BEGIN_SRC emacs-lisp :tangle yes
+;; initial mode for scratch
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message nil)
+#+END_SRC
+
+** Visual Settings
+
+Who wants a splash screen? I have coding to do!
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq inhibit-splash-screen t)
+#+END_SRC
+
+WHTF I don't want things to flicker and flash and beep every damn time I hit `C-g` -
+what type of sociapath would want this, I'll never know.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq ring-bell-function 'ignore)
+(setq visible-bell nil)
+#+END_SRC
+
+Allows you to use ~y~, ~n~ on prompts instead of ~yes~ or ~no~.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+This is another one that I might look into white listing. Simple turns off line wrapping,
+for code I find this makes things less readable.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq-default truncate-lines t)
+#+END_SRC
+
+Simply display the column in the buffer info
+#+BEGIN_SRC emacs-lisp :tangle yes
+(column-number-mode)
+#+END_SRC
+
+Visually highlights the active line.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(global-hl-line-mode)
+#+END_SRC
+
+Don't let the cursor blink. Nobody wants that.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(blink-cursor-mode 0)
+#+END_SRC
+
+** Backup Files
+
+Put backup files (ie foo~) in one place too. (The backup-directory-alist
+list contains regexp=>directory mappings; filenames matching a regexp are
+backed up in the corresponding directory. Emacs will mkdir it if necessary.)
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
+  (setq backup-directory-alist
+    `((".*" . ,emacs-tmp-dir)))
+  (setq auto-save-file-name-transforms
+    `((".*" ,emacs-tmp-dir t)))
+  (setq auto-save-list-file-prefix
+      emacs-tmp-dir)
+(setq create-lockfiles nil)
+#+END_SRC

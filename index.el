@@ -1,7 +1,7 @@
 (package-initialize)
 
 (org-babel-load-file "~/.emacs.d/init.org")
-(load "~/.emacs.d/defaults.el")
+(org-babel-load-file "~/.emacs.d/defaults.org")
 (load "~/.emacs.d/packages.el")
 (org-babel-load-file "~/.emacs.d/functions.org")
 (org-babel-load-file "~/.emacs.d/bindings.org")
