@@ -1,6 +1,11 @@
 ;; color theme for the pretty stuff
-(use-package color-theme)
-(use-package color-theme-sanityinc-tomorrow)
+(use-package color-theme-sanityinc-tomorrow
+  :config
+  (setf custom-safe-themes t)
+  (color-theme-sanityinc-tomorrow-night)
+  (global-hl-line-mode 1)
+  (custom-set-faces
+   '(cursor ((t :background "#eebb28")))))
 
 (use-package ansi-color)
 
@@ -46,24 +51,15 @@
   (bind-key "C-c C-r" 'ivy-resume)
   (setq ivy-height 20))
 
-;; makes the ivy-switch buffer fancy
-(use-package ivy-rich
-  :config
-  (setq ivy-rich-path-style 'abbrev)
-  (setq ivy-virtual-abbreviate 'full)
-  (setq ivy-rich-switch-buffer-align-virtual-buffer t)
-  (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))
-
 (use-package projectile
   :ensure t
   :bind
   ("C-x C-g" . projectile-find-file)
   ("C-x g g" . projectile-find-file)
   :config
-  (projectile-global-mode)
+  (projectile-mode)
   (setq projectile-mode-line
         '(:eval (format " [%s]" (projectile-project-name))))
-  (setq projectile-remember-window-configs t)
   (setq projectile-enable-caching t)
   (setq projectile-completion-system 'ivy))
 
@@ -144,5 +140,4 @@
 
 (use-package nyan-mode
   :config
-  (setq nyan-animate-nyancat t)
   (nyan-mode))

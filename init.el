@@ -8,10 +8,17 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; improved package menu, easy upgrades with paradox-upgrade-packages
-(use-package paradox)
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(horizontal-scroll-bar-mode 0)
+(toggle-frame-maximized)
 
-;; https://github.com/technomancy/better-defaults
-(use-package better-defaults
-  :config
-  (require 'better-defaults))
+(show-paren-mode 1)
+(setq-default indent-tabs-mode nil)
+
+(setq debug-on-error t
+      load-prefer-newer t
+      uniquify-buffer-name-style 'forward
+      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      )
