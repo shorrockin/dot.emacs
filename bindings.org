@@ -3,6 +3,9 @@
 This file simply contains a collection of key bindings that is common to
 all modes. It doesn't really require more explanation than that.
 
+** Standard Emacs Binding
+
+We split our bindings into two sections, first standard emacs.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (global-set-key [f7] 'align-regexp)
 (global-set-key [f8] 'call-last-kbd-macro)
@@ -23,4 +26,17 @@ all modes. It doesn't really require more explanation than that.
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region-or-line)
+#+END_SRC
+
+** Evil Bindings
+
+Then we add our evil-specific bindings, using the leader key (defined as ~,~)
+#+BEGIN_SRC emacs-lisp :tangle yes
+(evil-leader/set-key
+  "a" 'align-regexp
+  "/" 'hippie-expand
+  "g" 'ftf-grepsource
+  "f" 'projectile-find-file
+  "." 'dumb-jump-go
+  "*" 'dumb-jump-back)
 #+END_SRC

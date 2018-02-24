@@ -1,0 +1,4 @@
+* Agenda Home
+
+This directory simply serves as a home for all our org files. It's setup in
+the ~orgmode.org~ config file.

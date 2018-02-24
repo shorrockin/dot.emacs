@@ -14,3 +14,5 @@ bindings.el
 functions.el
 defaults.el
 packages.el
+org/*
+.tutor
