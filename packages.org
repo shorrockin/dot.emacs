@@ -292,5 +292,5 @@ more vim like
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package powerline
   :config
-  (powerline-evil-vim-color-theme))
+  (powerline-default-theme))
 #+END_SRC
