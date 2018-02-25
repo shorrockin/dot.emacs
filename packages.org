@@ -2,6 +2,19 @@
 
 All the great packages that get imported for use.
 
+** [[https://github.com/emacsmirror/diminish][Diminish]]
+
+Allows minor modes to not advertise their existing.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package diminish
+  :config
+  (diminish 'undo-tree-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'magit-auto-revert)
+)
+#+END_SRC
+
 ** [[https://github.com/purcell/color-theme-sanityinc-tomorrow][Color Theme: Tomorrow Night]]
 
 Same theme I use in the terminal for optimal visual compatibility
@@ -21,6 +34,7 @@ Handy package to display available keys in the minibuffer when you're half-way
 through a command.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package which-key
+  :diminish which-key-mode
   :init
   (which-key-mode +1))
 #+END_SRC
@@ -146,8 +160,6 @@ Modifies rjsx mode by adding ES6 capabilities.
   (add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode)))
 #+END_SRC
 
-
-
 ** [[https://magit.vc/][Magit]]
 
 The defacto git client for emacs. Truthfully I still default to the command line for most
@@ -161,6 +173,7 @@ things, but it comes in handy occasionally.
 Is a way to complete commands, serves as a backend for other packages mostly.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package company
+  :diminish company-mode
   :config
   (global-company-mode))
 #+END_SRC
@@ -224,9 +237,12 @@ progress in a file. A nice visual way to represent a percentage really.
 
 Vim bindings for emacs. Add's a few other packages which expand the feature
 set including:
-- evil-tutor: for running ~evil-tutor-start~
-- evil-escape: for customizing the escape key (defaults to ESC) - ~hh~ works well with dvorak
+
+- [[https://github.com/syl20bnr/evil-tutor][evil-tutor]]: for running ~evil-tutor-start~
+- [[https://github.com/syl20bnr/evil-escape][evil-escape]]: for customizing the escape key (defaults to ESC) - ~hh~ works well with dvorak, or just rebind capslock to esc.
 - [[https://github.com/cofi/evil-leader][evil-leader]]: mode for customizing commands off leader key, defaults to ~<SPC>~. Shortcuts further defined in bindings.org
+- [[https://github.com/bling/evil-visualstar][evil-visualstar]]: when you have something selected, press ~*~ to search for it (or ~#~ to search backwards)
+- [[https://github.com/redguardtoo/evil-matchit][evil-matchit]]: expands ~%~ functionality to match for a whole host of language specific things.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package evil
@@ -240,17 +256,41 @@ set including:
     (global-evil-leader-mode))
 
   (use-package evil-escape
+    :diminish evil-escape-mode
     :config
     (evil-escape-mode 1)
     (setq-default evil-escape-delay 0.2)
     (setq-default evil-escape-key-sequence "hh"))
 
   (use-package evil-snipe
+    :diminish evil-snipe-mode evil-snipe-local-mode evil-snipe-override-mode
     :config
     (setq evil-snipe-scope 'whole-buffer)
+    (setq evil-snipe-enable-incremental-highlight t)
+    (setq evil-snipe-smart-case t)
     (evil-snipe-mode +1)
     (evil-snipe-override-mode +1))
 
+  (use-package evil-visualstar
+    :diminish global-evil-visualstar-mode
+    :config
+    (global-evil-visualstar-mode))
+
+  (use-package evil-matchit
+    :diminish global-evil-matchit-mode
+    :config
+    (global-evil-matchit-mode))
+
   (evil-mode 1)
 )
+#+END_SRC
+
+** [[https://github.com/milkypostman/powerline][Powerline]]
+
+Powerline modifies the buffer display at the bottom to be a little prettier, a little
+more vim like
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package powerline
+  :config
+  (powerline-evil-vim-color-theme))
 #+END_SRC

@@ -51,8 +51,7 @@
      (show-paren-mode 1)
      (setq-default indent-tabs-mode nil)
 
-     (setq debug-on-error t
-       load-prefer-newer t
-       uniquify-buffer-name-style 'forward
-       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
+     (setq load-prefer-newer t
+           uniquify-buffer-name-style 'forward
+           backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
    #+END_SRC

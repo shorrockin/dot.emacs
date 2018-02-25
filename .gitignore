@@ -5,7 +5,7 @@ ido.last
 network-security.data
 projectile-bookmarks.eld
 projectile.cache
-tmp/
+tmp/*
 tramp
 var/
 init.el
