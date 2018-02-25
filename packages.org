@@ -226,24 +226,31 @@ Vim bindings for emacs. Add's a few other packages which expand the feature
 set including:
 - evil-tutor: for running ~evil-tutor-start~
 - evil-escape: for customizing the escape key (defaults to ESC) - ~hh~ works well with dvorak
-- [[https://github.com/cofi/evil-leader][evil-leader]]: mode for customizing commands off leader key, defaults to ~,~. Shortcuts further defined in bindings.org
+- [[https://github.com/cofi/evil-leader][evil-leader]]: mode for customizing commands off leader key, defaults to ~<SPC>~. Shortcuts further defined in bindings.org
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package evil
   :config
-  (use-package evil-tutor
-    :ensure t)
+
+  (use-package evil-tutor)
+
   (use-package evil-leader
-    :ensure t
     :config
-    (evil-leader/set-leader ",")
+    (evil-leader/set-leader "<SPC>")
     (global-evil-leader-mode))
+
   (use-package evil-escape
-    :ensure t
     :config
     (evil-escape-mode 1)
     (setq-default evil-escape-delay 0.2)
     (setq-default evil-escape-key-sequence "hh"))
+
+  (use-package evil-snipe
+    :config
+    (setq evil-snipe-scope 'whole-buffer)
+    (evil-snipe-mode +1)
+    (evil-snipe-override-mode +1))
+
   (evil-mode 1)
 )
 #+END_SRC
