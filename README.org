@@ -6,4 +6,5 @@ To install, just do the following
   1. Clone this repo to ~/.emacs.d
   2. ln -s ~/.emacs.d/index.el ~/.emacs
   3. Optionally symlink ~/.emacs.private.el if you have any config you don't want checked in
-  3. Start emacs
+  4. Start emacs
+  5. Run ~M-x all-the-icons-install-fonts~, and restart emacs.

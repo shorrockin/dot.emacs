@@ -288,11 +288,25 @@ set including:
 
 ** [[https://github.com/TheBB/spaceline][Spaceline]]
 
-Spaceline is a powerline-like extension seperated out from spacemacs. Very pretty.
+Spaceline is a powerline-like extension seperated out from spacemacs. Very pretty. This package
+uses the [[https://github.com/domtronn/all-the-icons.el][all-the-icons]] so it's required that you run:
+
+~M-x all-the-icons-install-fonts~
+
+After booting emacs.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package spaceline
   :config
   (require 'spaceline-config)
   (spaceline-emacs-theme)
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+
+  (use-package all-the-icons)
+
+  (use-package spaceline-all-the-icons
+    :config
+    (spaceline-all-the-icons-theme)
+  )
+)
 #+END_SRC
