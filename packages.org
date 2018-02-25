@@ -7,6 +7,7 @@ All the great packages that get imported for use.
 Allows minor modes to not advertise their existing.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package diminish
+  :demand t
   :config
   (diminish 'undo-tree-mode)
   (diminish 'auto-revert-mode)
@@ -285,12 +286,13 @@ set including:
 )
 #+END_SRC
 
-** [[https://github.com/milkypostman/powerline][Powerline]]
+** [[https://github.com/TheBB/spaceline][Spaceline]]
 
-Powerline modifies the buffer display at the bottom to be a little prettier, a little
-more vim like
+Spaceline is a powerline-like extension seperated out from spacemacs. Very pretty.
 #+BEGIN_SRC emacs-lisp :tangle yes
-(use-package powerline
+(use-package spaceline
   :config
-  (powerline-default-theme))
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 #+END_SRC
