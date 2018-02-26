@@ -27,37 +27,3 @@ provides a common way to load and access packages.
 
 (setq use-package-always-ensure t)
 #+END_SRC
-
-** Screen Setup
-
-The following simply sets up some screen setup, disables menus, scrollbars, maximizes
-the screen, etc.
-
-#+name: screen settings
-#+BEGIN_SRC emacs-lisp :tangle yes
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-(horizontal-scroll-bar-mode 0)
-(toggle-frame-maximized)
-#+END_SRC
-
-** Errata
-
-Set's some common variables. Kind of a mish mash of stuff.
-#+name: everything else
-#+BEGIN_SRC emacs-lisp :tangle yes
-(show-paren-mode 1)
-(setq-default indent-tabs-mode nil)
-
-(setq load-prefer-newer t
-      uniquify-buffer-name-style 'forward
-      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
-#+END_SRC
-
-Next we modify the custom change file so that it doesn't insert into ~index.el~, nice
-little trick I found over at [[http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/][this blog]]. Not that this file does not get checked in.
-#+BEGIN_SRC emacs-lisp :tangle yes
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file 'noerror)
-#+END_SRC

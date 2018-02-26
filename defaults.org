@@ -58,6 +58,17 @@ Tabs are the worst. So this forces spaces mostly everywhere.
 (setq-default indent-tabs-mode nil)
 #+END_SRC
 
+The following simply sets up some screen setup, disables menus, scrollbars, maximizes
+the screen, etc.
+#+name: screen settings
+#+BEGIN_SRC emacs-lisp :tangle yes
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(horizontal-scroll-bar-mode 0)
+(toggle-frame-maximized)
+#+END_SRC
+
 ** Visual Settings
 
 Who wants a splash screen? I have coding to do!
@@ -98,6 +109,28 @@ Don't let the cursor blink. Nobody wants that.
 (blink-cursor-mode 0)
 #+END_SRC
 
+Always show param pairs.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(show-paren-mode 1)
+#+END_SRC
+
+Tells emacs to avoid byte-compiled code that is older than the source
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq load-prefer-newer t)
+#+END_SRC
+
+Instructs how the buffer simplifies the names so they're unique.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq uniquify-buffer-name-style 'forward)
+#+END_SRC
+
+Next we modify the custom change file so that it doesn't insert into ~index.el~, nice
+little trick I found over at [[http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/][this blog]]. Not that this file does not get checked in.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
+#+END_SRC
+
 ** Backup Files
 
 Put backup files (ie foo~) in one place too. (The backup-directory-alist
@@ -113,4 +146,10 @@ backed up in the corresponding directory. Emacs will mkdir it if necessary.)
   (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 (setq create-lockfiles nil)
+#+END_SRC
+
+Let's us know where to put backups, defaults to the emacs.d director inside
+backups.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
 #+END_SRC
