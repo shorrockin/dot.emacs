@@ -67,6 +67,7 @@ I just use it for the ~ftf-grepsource~ command bound below.
   :config
   (setq ftf-filetypes
         '("*.go"
+          "*.org"
           "*.jsx"
           "*.js"
           "*.ts"

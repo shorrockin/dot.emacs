@@ -58,15 +58,11 @@ Tabs are the worst. So this forces spaces mostly everywhere.
 (setq-default indent-tabs-mode nil)
 #+END_SRC
 
-The following simply sets up some screen setup, disables menus, scrollbars, maximizes
-the screen, etc.
-#+name: screen settings
+Next we modify the custom change file so that it doesn't insert into ~index.el~, nice
+little trick I found over at [[http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/][this blog]]. Not that this file does not get checked in.
 #+BEGIN_SRC emacs-lisp :tangle yes
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-(horizontal-scroll-bar-mode 0)
-(toggle-frame-maximized)
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
 #+END_SRC
 
 ** Visual Settings
@@ -124,11 +120,15 @@ Instructs how the buffer simplifies the names so they're unique.
 (setq uniquify-buffer-name-style 'forward)
 #+END_SRC
 
-Next we modify the custom change file so that it doesn't insert into ~index.el~, nice
-little trick I found over at [[http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/][this blog]]. Not that this file does not get checked in.
+The following simply sets up some screen setup, disables menus, scrollbars, maximizes
+the screen, etc.
+#+name: screen settings
 #+BEGIN_SRC emacs-lisp :tangle yes
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file 'noerror)
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(horizontal-scroll-bar-mode 0)
+(toggle-frame-maximized)
 #+END_SRC
 
 ** Backup Files
