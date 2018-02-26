@@ -1,8 +1,8 @@
 * Org Mode
 
-  This file is meant to provide a place to centralize all the org-mode config.
-  It probably doesn't need to be in it's own file, however, in doing so it allows
-  me to document things as I figure it out.
+This file is meant to provide a place to centralize all the org-mode config.
+It probably doesn't need to be in it's own file, however, in doing so it allows
+me to document things as I figure it out.
 
 ** Reading Material
 

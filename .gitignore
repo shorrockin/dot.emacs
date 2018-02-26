@@ -16,3 +16,4 @@ defaults.el
 packages.el
 org/*
 .tutor
+custom.el
