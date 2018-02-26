@@ -147,9 +147,3 @@ backed up in the corresponding directory. Emacs will mkdir it if necessary.)
       emacs-tmp-dir)
 (setq create-lockfiles nil)
 #+END_SRC
-
-Let's us know where to put backups, defaults to the emacs.d director inside
-backups.
-#+BEGIN_SRC emacs-lisp :tangle yes
-(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
-#+END_SRC
