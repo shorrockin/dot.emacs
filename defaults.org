@@ -53,6 +53,11 @@ Set's up org-mode as the default scratch mode, also removes the default message.
 (setq initial-scratch-message nil)
 #+END_SRC
 
+Tabs are the worst. So this forces spaces mostly everywhere.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
 ** Visual Settings
 
 Who wants a splash screen? I have coding to do!
