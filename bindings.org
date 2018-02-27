@@ -38,5 +38,9 @@ Then we add our evil-specific bindings, using the leader key (defined as ~<SPC>~
   "g" 'ftf-grepsource
   "f" 'projectile-find-file
   "." 'dumb-jump-go
-  "*" 'dumb-jump-back)
+  "*" 'dumb-jump-back
+  "<tab>" 'indent-according-to-mode
+  "b" 'switch-to-buffer
+  "w" 'writeroom-mode
+)
 #+END_SRC

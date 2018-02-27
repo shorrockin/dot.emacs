@@ -53,6 +53,16 @@ not providing any real value.
   (sublimity-mode 1))
 #+END_SRC
 
+** [[https://github.com/joostkremers/writeroom-mode][Writeroom]]
+
+Writeroom mode is a way to focus the emacs window, full-screen things, center the content and all that other good stuff.
+By default doesn't enable, bindings set to ~<SPC> w~ to turn on/off.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package writeroom-mode
+  :config
+  (setq writeroom-mode-line t))
+#+END_SRC
+
 ** [[https://github.com/eglaysher/find-things-fast][Find Things Fast (FTF)]]
 
 FTF is a quick way to find things quickly in an git based project. I originally used

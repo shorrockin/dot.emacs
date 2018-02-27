@@ -65,6 +65,11 @@ little trick I found over at [[http://emacsblog.org/2008/12/06/quick-tip-detachi
 (load custom-file 'noerror)
 #+END_SRC
 
+Confirms that we really want to close emacs.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq confirm-kill-emacs 'y-or-n-p)
+#+END_SRC
+
 ** Visual Settings
 
 Who wants a splash screen? I have coding to do!

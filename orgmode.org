@@ -84,14 +84,17 @@ mappings for shift-<arrow>, as I use these to navigate between my buffers.
 (define-key org-mode-map (kbd "S-<down>") nil)
 #+END_SRC
 
-Now sets up speed keys, a lesser known, but useful feature to perform things better.
-See the following sources for documentation.
+Now we add some evil-mode [[https://github.com/cofi/evil-leader][leader]] bindings to perform some other common tasks
+specifically for ~org-mode~.
 
-- http://notesyoujustmightwanttosave.blogspot.ca/2011/12/org-speed-keys.html
-- https://orgmode.org/manual/Speed-keys.html
-
-Specifically ~t~ and ~1~, ~2~, ~3~ to set the various priorities which were disabled
-above. Press ~?~ at the start of any headline to see what's possible.
 #+BEGIN_SRC emacs-lisp :tangle yes
-(setq org-use-speed-commands t)
+(evil-leader/set-key-for-mode 'org-mode
+  "a" 'org-agenda
+  "t" 'org-shiftright
+  "T" 'org-shiftleft
+  "1" 'org-priority-up
+  "." 'org-shiftmetaright
+  "," 'org-shiftmetaleft
+  "<RET>" 'org-insert-todo-heading
+  "d" 'org-deadline)
 #+END_SRC
