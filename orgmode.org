@@ -52,7 +52,7 @@ a per file basis check out [[https://orgmode.org/manual/Initial-visibility.html]
 
 Customizes the ellipsis which indicates when things can be unfolded.
 #+BEGIN_SRC emacs-lisp :tangle yes
-(setq org-ellipsis "⤵")
+(setq org-ellipsis " ⤵")
 #+END_SRC
 
 ** Agenda Setup
@@ -95,6 +95,8 @@ specifically for ~org-mode~.
   "1" 'org-priority-up
   "." 'org-shiftmetaright
   "," 'org-shiftmetaleft
+  "s" 'org-sort-entries
+  "<TAB>" 'org-shifttab
   "<RET>" 'org-insert-todo-heading
   "d" 'org-deadline)
 #+END_SRC
