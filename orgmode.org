@@ -65,13 +65,27 @@ whatever you prefer.
 (setq org-agenda-files '("~/.emacs.d/org"))
 #+END_SRC
 
-When we ~M-x 'org-agenda~ this provides a custom view of everything all together.
+When we ~M-x 'org-agenda~ this provides a custom view of everything all together bound to ~c~.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq org-agenda-custom-commands
       '(("c" "Simple agenda view"
          ((agenda "")
           (alltodo "")))))
 #+END_SRC
+
+When we ~M-x 'org-agenda~ this provides a custom view of the previous week bound to ~w~.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(add-to-list 'org-agenda-custom-commands
+             '("w" "Weekly review"
+               agenda ""
+               ((org-agenda-span 'week)
+                (org-agenda-start-on-weekday 0)
+                (org-agenda-start-with-log-mode t)
+                (org-agenda-skip-function
+                 '(org-agenda-skip-entry-if 'nottodo 'done))
+                 )))
+#+END_SRC
+
 
 ** Key Bindings
 
@@ -89,10 +103,11 @@ specifically for ~org-mode~.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 (evil-leader/set-key-for-mode 'org-mode
-  "a" 'org-agenda
+  "a" 'org-toggle-archive-tag
   "t" 'org-shiftright
   "T" 'org-shiftleft
   "1" 'org-priority-up
+  "!" 'org-priority-down
   "." 'org-shiftmetaright
   "," 'org-shiftmetaleft
   "s" 'org-sort-entries

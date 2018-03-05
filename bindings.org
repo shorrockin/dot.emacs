@@ -10,6 +10,7 @@ We split our bindings into two sections, first standard emacs.
 (global-set-key [f7] 'align-regexp)
 (global-set-key [f8] 'call-last-kbd-macro)
 (global-set-key [f5] 'revert-buffer)
+(global-set-key [f12] 'org-agenda)
 
 (global-set-key [A-down] 'shrink-window)
 (global-set-key [A-up] 'enlarge-window)
@@ -39,9 +40,13 @@ Then we add our evil-specific bindings, using the leader key (defined as ~<SPC>~
   "f" 'projectile-find-file
   "." 'dumb-jump-go
   "*" 'dumb-jump-back
-  "<tab>" 'indent-according-to-mode
+  "<tab>" 'indent-region
   "b" 'switch-to-buffer
   "w" 'writeroom-mode
+  "(" 'start-kbd-macro
+  ")" 'kmacro-end-macro
+  "e" 'kmacro-end-and-call-macro
+  "t" 'evil-visual-mark-mode
 )
 #+END_SRC
 

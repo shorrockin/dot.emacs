@@ -255,6 +255,7 @@ set including:
 - [[https://github.com/cofi/evil-leader][evil-leader]]: mode for customizing commands off leader key, defaults to ~<SPC>~. Shortcuts further defined in bindings.org
 - [[https://github.com/bling/evil-visualstar][evil-visualstar]]: when you have something selected, press ~*~ to search for it (or ~#~ to search backwards)
 - [[https://github.com/redguardtoo/evil-matchit][evil-matchit]]: expands ~%~ functionality to match for a whole host of language specific things.
+- [[https://github.com/roman/evil-visual-mark-mode][evil-visual-mark-mode]]: shows marks in the set by vim in the buffer
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package evil
@@ -292,6 +293,8 @@ set including:
     :diminish global-evil-matchit-mode
     :config
     (global-evil-matchit-mode))
+
+  (use-package evil-visual-mark-mode)
 
   (evil-mode 1)
 )
