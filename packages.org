@@ -172,6 +172,24 @@ Modifies rjsx mode by adding ES6 capabilities.
   (add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode)))
 #+END_SRC
 
+** [[https://github.com/zenspider/enhanced-ruby-mode][Enhanced Ruby Mode]]
+
+Provides better features than the standard ruby mode, better indentation as well as minor
+syntax error detection.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package enh-ruby-mode
+  :config
+  (setq enh-ruby-deep-indent-paren nil)
+  (setq ruby-insert-encoding-magic-comment nil)
+  (setq enh-ruby-add-encoding-comment-on-save nil)
+  (setq enh-ruby-deep-indent-construct nil)
+  (set-fill-column 80)
+  (add-to-list 'auto-mode-alist
+               '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
+)
+#+END_SRC
+
 ** [[https://magit.vc/][Magit]]
 
 The defacto git client for emacs. Truthfully I still default to the command line for most
@@ -232,7 +250,9 @@ to using ~TAGS~ without a lot of the hassle.
 (use-package dumb-jump
   :bind
   ("M-." . dumb-jump-go)
-  ("M-*" . dumb-jump-back))
+  ("M-*" . dumb-jump-back)
+  :config
+  (setq dumb-jump-selector 'ivy))
 #+END_SRC
 
 ** [[https://github.com/TeMPOraL/nyan-mode][Nyan Mode]]
@@ -295,6 +315,8 @@ set including:
     (global-evil-matchit-mode))
 
   (use-package evil-visual-mark-mode)
+
+  (setq evil-ex-substitute-global t)
 
   (evil-mode 1)
 )

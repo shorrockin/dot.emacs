@@ -55,6 +55,11 @@ Customizes the ellipsis which indicates when things can be unfolded.
 (setq org-ellipsis " ⤵")
 #+END_SRC
 
+Forces org mode to start with line truncating, wrapping.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(add-hook 'org-mode-hook 'turn-on-visual-line-mode)
+#+END_SRC
+
 ** Agenda Setup
 
 First we define a home for all our org files. We're going to default to a directory
@@ -111,7 +116,7 @@ specifically for ~org-mode~.
   "." 'org-shiftmetaright
   "," 'org-shiftmetaleft
   "s" 'org-sort-entries
-  "<TAB>" 'org-shifttab
+  "\t" 'org-shifttab
   "<RET>" 'org-insert-todo-heading
   "d" 'org-deadline)
 #+END_SRC

@@ -41,3 +41,18 @@ exist already in emacs, yet it doesn't. "Borrowed" from [[http://steve.yegge.goo
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 #+END_SRC
+
+** Pin Buffer
+
+Used to pin a buffer/window to prevent it from resizing, splitting, etc.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(defun pin-buffer ()
+  "Pin buffer to current window."
+  (interactive)
+  (message
+   (if (let (window (get-buffer-window (current-buffer)))
+         (set-window-dedicated-p window (not (window-dedicated-p window))))
+       "pinned buffer" "un-pinned buffer")
+   ))
+#+END_SRC

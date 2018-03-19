@@ -42,11 +42,18 @@ Then we add our evil-specific bindings, using the leader key (defined as ~<SPC>~
   "*" 'dumb-jump-back
   "<tab>" 'indent-region
   "b" 'switch-to-buffer
-  "w" 'writeroom-mode
+  "W" 'writeroom-mode
   "(" 'start-kbd-macro
   ")" 'kmacro-end-macro
   "e" 'kmacro-end-and-call-macro
   "t" 'evil-visual-mark-mode
+  "1" 'delete-other-windows
+  "2" 'split-window-below
+  "3" 'split-window-right
+  "0" 'delete-window
+  "x" 'counsel-M-x
+  "<backspace>" 'balance-windows
+  "k" 'kill-buffer
 )
 #+END_SRC
 
