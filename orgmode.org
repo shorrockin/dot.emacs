@@ -116,6 +116,7 @@ specifically for ~org-mode~.
   "." 'org-shiftmetaright
   "," 'org-shiftmetaleft
   "s" 'org-sort-entries
+  "c" 'org-toggle-checkbox
   "\t" 'org-shifttab
   "<RET>" 'org-insert-todo-heading
   "d" 'org-deadline)

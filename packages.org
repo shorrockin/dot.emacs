@@ -255,16 +255,6 @@ to using ~TAGS~ without a lot of the hassle.
   (setq dumb-jump-selector 'ivy))
 #+END_SRC
 
-** [[https://github.com/TeMPOraL/nyan-mode][Nyan Mode]]
-
-The dumbest mode in here. Add's a little rainbow nyan cat to represent
-progress in a file. A nice visual way to represent a percentage really.
-#+BEGIN_SRC emacs-lisp :tangle yes
-(use-package nyan-mode
-  :config
-  (nyan-mode))
-#+END_SRC
-
 ** [[https://github.com/emacs-evil/evil][Evil Mode]]
 
 Vim bindings for emacs. Add's a few other packages which expand the feature
