@@ -35,6 +35,7 @@ Then we add our evil-specific bindings, using the leader key (defined as ~<SPC>~
 #+BEGIN_SRC emacs-lisp :tangle yes
 (evil-leader/set-key
   "a" 'align-regexp
+  "A" 'mark-whole-buffer
   "/" 'comment-or-uncomment-region-or-line
   "g" 'ftf-grepsource
   "f" 'projectile-find-file

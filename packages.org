@@ -100,6 +100,14 @@ Simple package to ensure that ~.emacs.d~ stays tidy and clean.
   :demand t)
 #+END_SRC
 
+** [[http://ensime.github.io/editors/emacs/install/][Ensime]]
+
+Used for scala development.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package ensime
+  :pin melpa-stable)
+#+END_SRC
+
 ** [[https://github.com/abo-abo/swiper][Ivy & Counsel]]
 
 Ivy and Consel are two related packages, one for improved autocomplete (similar to helm)
@@ -333,6 +341,10 @@ After booting emacs.
   (use-package spaceline-all-the-icons
     :config
     (spaceline-all-the-icons-theme)
+    (setq spaceline-all-the-icons-clock-always-visible nil)
+    (setq spaceline-all-the-icons-eyebrowse-display-name nil)
+    (setq spaceline-all-the-icons-hide-long-buffer-path t)
+    (setq spaceline-all-the-icons-highlight-file-name t)
   )
 )
 #+END_SRC

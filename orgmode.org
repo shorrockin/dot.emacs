@@ -101,6 +101,10 @@ mappings for shift-<arrow>, as I use these to navigate between my buffers.
 (define-key org-mode-map (kbd "S-<right>") nil)
 (define-key org-mode-map (kbd "S-<up>") nil)
 (define-key org-mode-map (kbd "S-<down>") nil)
+
+(evil-define-key 'normal org-mode-map
+  "}" 'outline-next-visible-heading
+  "{" 'outline-previous-visible-heading)
 #+END_SRC
 
 Now we add some evil-mode [[https://github.com/cofi/evil-leader][leader]] bindings to perform some other common tasks
