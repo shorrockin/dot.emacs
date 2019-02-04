@@ -250,6 +250,30 @@ Major mode for editing yaml.
   (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode)))
 #+END_SRC
 
+** [[https://github.com/sabof/org-bullets][org-bullets]]
+
+Cleans up the bullets in org-mode, makes me feel like a fancy boy.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(load "~/.emacs.d/org-bullets.el")
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+END_SRC
+
+** org-fancy-priorities
+
+Similar to above, makes priorities feel fancier
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package org-fancy-priorities
+  :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+#+END_SRC
+
+
 ** [[https://github.com/jacktasia/dumb-jump][Dumb Jump]]
 
 Dump jump is a really simple, jump to definition implementation. Similar
@@ -346,5 +370,16 @@ After booting emacs.
     (setq spaceline-all-the-icons-hide-long-buffer-path t)
     (setq spaceline-all-the-icons-highlight-file-name t)
   )
+)
+#+END_SRC
+
+** [[https://github.com/Fanael/rainbow-delimiters][Rainbow Delimeter Mode]]
+
+Modifies the delimeters in code to be color coded when nested.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 )
 #+END_SRC

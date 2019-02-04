@@ -105,6 +105,12 @@ Visually highlights the active line.
 (global-hl-line-mode)
 #+END_SRC
 
+Enables global line number in the fringes
+#+BEGIN_SRC emacs-lisp :tangle yes
+(global-linum-mode)
+(fringe-mode)
+#+END_SRC
+
 Don't let the cursor blink. Nobody wants that.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (blink-cursor-mode 0)

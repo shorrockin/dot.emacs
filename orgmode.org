@@ -52,12 +52,17 @@ a per file basis check out [[https://orgmode.org/manual/Initial-visibility.html]
 
 Customizes the ellipsis which indicates when things can be unfolded.
 #+BEGIN_SRC emacs-lisp :tangle yes
-(setq org-ellipsis " ⤵")
+(setq org-ellipsis "…")
 #+END_SRC
 
 Forces org mode to start with line truncating, wrapping.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
+#+END_SRC
+
+Set's the line separator between collapsed trees, see [[https://www.reddit.com/r/orgmode/comments/3c4xdk/spacing_between_items_when_trees_are_folded/][this reddit post]].
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq org-cycle-separator-lines 2)
 #+END_SRC
 
 ** Agenda Setup
