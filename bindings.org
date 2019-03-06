@@ -55,14 +55,15 @@ Then we add our evil-specific bindings, using the leader key (defined as ~<SPC>~
   "x" 'counsel-M-x
   "<backspace>" 'balance-windows
   "k" 'kill-buffer
+  "n" 'next-error
+  "p" 'previous-error
 )
 #+END_SRC
 
 Some binding specific to smerge, have to use this style of binding instead of above since
 smerge is a minor mode.
 #+BEGIN_SRC emacs-lisp :tangle yes
-(evil-define-minor-mode-key 'normal 'smerge-mode (kbd "SPC n") 'smerge-next)
-(evil-define-minor-mode-key 'normal 'smerge-mode (kbd "SPC N") 'smerge-prev)
-(evil-define-minor-mode-key 'normal 'smerge-mode (kbd "SPC p") 'smerge-prev)
+(evil-define-minor-mode-key 'normal 'smerge-mode (kbd "SPC N") 'smerge-next)
+(evil-define-minor-mode-key 'normal 'smerge-mode (kbd "SPC P") 'smerge-prev)
 (evil-define-minor-mode-key 'normal 'smerge-mode (kbd "SPC RET") 'smerge-keep-current)
 #+END_SRC

@@ -260,6 +260,14 @@ Cleans up the bullets in org-mode, makes me feel like a fancy boy.
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+END_SRC
 
+** [[fira code ligatures]]
+
+Requires fire code symbols to be installed, instructions defined [[https://github.com/tonsky/FiraCode/wiki/Emacs-instructions][here]].
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(load "~/.emacs.d/fira-code-ligatures.el")
+#+END_SRC
+
 ** org-fancy-priorities
 
 Similar to above, makes priorities feel fancier

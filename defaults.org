@@ -4,6 +4,11 @@ This is a list of some high-level global defaults that do a variety of different
 
 ** Functional Settings
 
+Set's our default font to Fira Code
+#+BEGIN_SRC emacs-lisp :tangle yes
+(set-default-font "Fira Code")
+#+END_SRC
+
 Set's the temp directory to run out of ~.emacs.d~ which is in our ~.gitignore~.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq temporary-file-directory "~/.emacs.d/tmp/")
