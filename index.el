@@ -1,5 +1,3 @@
-(package-initialize)
-
 (org-babel-load-file "~/.emacs.d/init.org")
 (org-babel-load-file "~/.emacs.d/defaults.org")
 (org-babel-load-file "~/.emacs.d/packages.org")

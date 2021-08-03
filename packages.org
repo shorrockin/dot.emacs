@@ -2,6 +2,9 @@
 
 All the great packages that get imported for use.
 
+** [[https://github.com/dangom/org-mode/blob/master/lisp/org-tempo.el][Org-Tempo]]
+Re-enables <s type of expansions in org-mode
+
 ** [[https://github.com/emacsmirror/diminish][Diminish]]
 
 Allows minor modes to not advertise their existing.
@@ -45,12 +48,15 @@ through a command.
 Sublimity adds smoother scrolling to emacs. Similar to sublime editor (apparently,
 never used it). Also has support for mini-maps, but I found them to distracting and
 not providing any real value.
+
+_Disabled as it'll kill horizontal scrolling after being alive for some time_
+
 #+BEGIN_SRC emacs-lisp :tangle yes
-(use-package sublimity
-  :config
-  (require 'sublimity)
-  (require 'sublimity-scroll)
-  (sublimity-mode 1))
+;; (use-package sublimity
+;;  :config
+;;  (require 'sublimity)
+;;  (require 'sublimity-scroll)
+;;  (sublimity-mode 1))
 #+END_SRC
 
 ** [[https://github.com/joostkremers/writeroom-mode][Writeroom]]
@@ -292,7 +298,9 @@ to using ~TAGS~ without a lot of the hassle.
   ("M-." . dumb-jump-go)
   ("M-*" . dumb-jump-back)
   :config
-  (setq dumb-jump-selector 'ivy))
+  (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-force-searcher 'rg)
+)
 #+END_SRC
 
 ** [[https://github.com/emacs-evil/evil][Evil Mode]]
@@ -352,12 +360,23 @@ set including:
 )
 #+END_SRC
 
+** [[https://github.com/domtronn/all-the-icons.el][All The Icons]]
+
+Mostly used by spaceline before, but doesn't hurt to have it outside of that package declaration as it's nice for
+other things too.
+
+~M-x all-the-icons-install-fonts~
+
+Is required after booting emacs.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package all-the-icons)
+#+END_SRC
+
 ** [[https://github.com/TheBB/spaceline][Spaceline]]
 
 Spaceline is a powerline-like extension seperated out from spacemacs. Very pretty. This package
 uses the [[https://github.com/domtronn/all-the-icons.el][all-the-icons]] so it's required that you run:
-
-~M-x all-the-icons-install-fonts~
 
 After booting emacs.
 
@@ -366,9 +385,6 @@ After booting emacs.
   :config
   (require 'spaceline-config)
   (spaceline-emacs-theme)
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-
-  (use-package all-the-icons)
 
   (use-package spaceline-all-the-icons
     :config
@@ -386,8 +402,8 @@ After booting emacs.
 Modifies the delimeters in code to be color coded when nested.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
-(use-package rainbow-delimiters
-  :config
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-)
+;;(use-package rainbow-delimiters
+;;  :config
+;;  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+;;)
 #+END_SRC

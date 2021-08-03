@@ -3,6 +3,13 @@
 This file serves as the first thing when we boot emacs. From here we setup some
 defaults and some things we'll use throughout the rest of configuration.
 
+** Setup Path
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+#+END_SRC
+
 ** Use Package
 
 Sets up ~use-package~ [[https://github.com/jwiegley/use-package][(link)]] which in short
@@ -16,6 +23,12 @@ provides a common way to load and access packages.
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+;; temp for https://github.com/syl20bnr/spacemacs/issues/11784
+(add-to-list 'package-pinned-packages '(spaceline . "melpa-stable"))
+(add-to-list 'package-pinned-packages '(spaceline-all-the-icons . "melpa-stable"))
+(add-to-list 'package-pinned-packages '(all-the-icons . "melpa-stable"))
+
 (package-initialize)
 
 (unless (package-installed-p 'use-package)

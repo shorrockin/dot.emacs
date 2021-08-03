@@ -45,7 +45,7 @@ displayed in regards to indentation.
 #+END_SRC
 
 Sets the initial visiblity of an opened file. To define this specifically on
-a per file basis check out [[https://orgmode.org/manual/Initial-visibility.html][this]] link.
+a per file basis check out [[https://orgmode.org/manual/Initial-visibility.html][this]] link. (seo: expand collapse)
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq org-startup-folded "content")
 #+END_SRC
@@ -124,7 +124,7 @@ specifically for ~org-mode~.
   "!" 'org-priority-down
   "." 'org-shiftmetaright
   "," 'org-shiftmetaleft
-  "s" 'org-sort-entries
+  "S" 'org-sort-entries
   "c" 'org-toggle-checkbox
   "\t" 'org-shifttab
   "<RET>" 'org-insert-todo-heading

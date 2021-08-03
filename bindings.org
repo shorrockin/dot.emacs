@@ -57,6 +57,9 @@ Then we add our evil-specific bindings, using the leader key (defined as ~<SPC>~
   "k" 'kill-buffer
   "n" 'next-error
   "p" 'previous-error
+  "w" 'save-buffer
+  "s" 'save-buffer
+  "q" 'call-last-kbd-macro
 )
 #+END_SRC
 
